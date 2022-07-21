@@ -1,0 +1,244 @@
+/*
+const whereCanIPark = function (spots, vehicle) {
+  
+  for (let y = 0; y < spots.length; y++) {
+//const spot = spots[y][x];
+    for (let x = 0; x < spots[y].length; x++) {
+      const spot = spots[y][x];
+      if (vehicle === "regular") {
+        if (spot === "R") {
+          return [x,y];
+        }
+      } else if (vehicle === "small") {
+        if (spot === "R" || spot === "S") {
+          return [x,y];
+        } 
+      } else if (vehicle === "motorcycle") {
+        if (spot === "R" || spot === "S" || spot === "M") {
+          return [x,y];
+        } 
+      }
+    }
+  }
+  return false;
+}
+
+
+
+console.log(whereCanIPark(
+  [
+    // COLUMNS ARE X
+    // 0    1    2    3    4    5
+    ['s', 's', 's', 'S', 'R', 'M'], // 0 ROWS ARE Y
+    ['s', 'M', 's', 'S', 'r', 'M'], // 1
+    ['s', 'M', 's', 'S', 'r', 'm'], // 2
+    ['S', 'r', 's', 'm', 'r', 'M'], // 3
+    ['S', 'r', 's', 'm', 'r', 'M'], // 4
+    ['S', 'r', 'S', 'M', 'M', 'S']  // 5
+  ],
+  'regular'
+));
+
+console.log(whereCanIPark(
+  [
+    ['M', 'M', 'M', 'M'],
+    ['M', 's', 'M', 'M'],
+    ['M', 'M', 'M', 'M'],
+    ['M', 'M', 'r', 'M']
+  ],
+  'small'
+));
+
+console.log(whereCanIPark(
+  [
+    ['s', 's', 's', 's', 's', 's'],
+    ['s', 'm', 's', 'S', 'r', 's'],
+    ['s', 'm', 's', 'S', 'r', 's'],
+    ['S', 'r', 's', 'm', 'r', 's'],
+    ['S', 'r', 's', 'm', 'R', 's'],
+    ['S', 'r', 'S', 'M', 'm', 'S']
+  ],
+  'motorcycle'
+))
+
+
+const organizeInstructors = function (instructors) {
+  const organizedList = {};
+
+  for (let i = 0; i < instructors.length; i++) {
+    const correctCourse = instructors[i].course;
+
+    if (correctCourse in organizedList) {
+      continue;
+    }
+
+    organizedList[correctCourse] = [];
+    for (let j = i; j < instructors.length; j++) {
+      const currentCourse = instructors[j].course;
+      const currentInstructor = instructors[j].name;
+      if (currentCourse === correctCourse) {
+        organizedList[currentCourse].push(currentInstructor)
+      }
+    }
+
+  }
+
+  return organizedList;
+}
+console.log(organizeInstructors([
+  {name: "Samuel", course: "iOS"},
+  {name: "Victoria", course: "Web"},
+  {name: "Karim", course: "Web"},
+  {name: "Donald", course: "Web"}
+]));
+
+console.log(organizeInstructors([
+  {name: "Brendan", course: "Blockchain"},
+  {name: "David", course: "Web"},
+  {name: "Martha", course: "iOS"},
+  {name: "Carlos", course: "Web"}
+]));
+
+
+
+
+const startPoint = [0,0];
+let direc = "";
+let eastNum = 0;
+let westNum = 0
+let northNum = 0;
+let southNum = 0;
+let conditionString = [];
+let finalArray = [];
+
+const blocksAway = function(directions) {
+  if(directions[0] === "right") {
+    direc = "east";
+    eastNum = directions[1];
+    northNum = directions[3]
+  } else if(directions[0] === "left") {
+    direc = "north";
+    northNum = directions[1];
+    eastNum = directions[3];
+  }
+  conditionString = direc.concat(directions[2]);
+console.log(conditionString);
+console.log(eastNum);
+console.log(northNum);
+  for(let i = 2; i < directions.length; i =i+2) {
+   //console.log(conditionString)
+   //console.log(eastNum)
+   //console.log(northNum)
+   //console.log(westNum)
+   //console.log("yi");
+  
+    switch(conditionString) {
+      case "eastleft" : 
+        direc = "north";
+        northNum += directions[i+3];
+        conditionString = direc.concat(directions[i+2]);
+        break;
+      case "eastright" : 
+        direc = "south";
+        southNum += directions[i+3];
+        conditionString = direc.concat(directions[i+2]);
+        break;
+      case "northleft" : 
+        direc = "west";
+        westNum += directions[i+3];
+        conditionString = direc.concat(directions[i+2]);
+        break;
+      case "northright" : 
+        direc = "east";
+        eastNum += directions[i+3];
+        conditionString = direc.concat(directions[i+2]);
+        break;
+      case "westleft" : 
+        direc = "south";
+        southNum += directions[i+3];
+        conditionString = direc.concat(directions[i+2]);
+        break;
+      case "westright" : 
+        direc = "north";
+        northNum += directions[i+3];
+        conditionString = direc.concat(directions[i+2]);
+        break;
+      case "southleft" : 
+        direc = "west";
+        westNum += directions[i+3];
+        conditionString = direc.concat(directions[i+2]);
+        break;
+      case "southright" : 
+        direc = "east";
+        eastNum += directions[i+3];
+        conditionString = direc.concat(directions[i+2]);
+        break;
+    }
+   // console.log(conditionString)
+   // console.log(eastNum);
+//////console.log(northNum);
+//console.log(southNum);
+//console.log(westNum)
+//console.log(eastNum)
+//console.log(northNum)
+//console.log(westNum)
+
+  }
+  console.log(eastNum);
+console.log(northNum);
+console.log(southNum);
+console.log(westNum);
+  finalArray.push(eastNum - westNum);
+  finalArray.push(northNum - southNum);
+  return finalArray;
+  
+}
+
+
+
+
+//console.log(blocksAway(["right", 2, "left", 3, "left", 1]));
+//console.log(blocksAway(["left", 1, "right", 1, "left", 1, "right", 1, "left", 1, "right", 1]));
+console.log(blocksAway(["left", 3, "right", 1, "right", 3, "right", 1]));
+
+
+
+const s = function(input) {
+  let output = ""
+  if (input === "a") {
+    output = console.log("1");
+  } else if (input === "b") {
+    output = console.log("2");
+  } else if (input === "c") {
+    console.log("3");
+    break;
+  }
+  return output;
+}
+
+s("a")
+*/
+
+let newArray = [];
+let bool = true;
+
+let campareArray = function(a, b) {
+  return a.length === b.length && a.every((val, index) => val === b[index]);
+}
+
+function isValidSubsequence(array, sequence) {
+  for(let i = 0;i<sequence.length; i++){
+    for(let j = 0; j < array.length; j++) {
+      if(sequence[i] === array[j]) {
+        newArray.push(sequence[i]);
+      }
+    } 
+  }
+
+  if (!campareArray(newArray, sequence)) {
+    bool = false;
+  } 
+  return bool;
+}
+
+console.log(isValidSubsequence([5,1,22,25,6,-1,8,10],[5, 1, 22, 6, -1, 8, 10]));
